@@ -19,7 +19,7 @@ namespace RequestDecorator.Extension.Test
 
         public APIContext<Context> GetAPIContext()
         {
-            var apiContext = new APIContext<Context>(new Context(), SerializationHelper.CustomGetJSONSerializedObject
+            var apiContext = new APIContext<Context>(new Context(), SerializeDeserializeHelper.GetJSONSerializedObject
                 , (l) =>
                 {
                     Console.WriteLine(l.ToString());
@@ -124,7 +124,7 @@ namespace RequestDecorator.Extension.Test
             }; 
         public async Task<Model> Process(IAPIContext<Context> context)
         {
-            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializationHelper.CustomGetJSONSerializedObject).DecorateWithExecutionTimeLogger();
+            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializeDeserializeHelper.GetJSONSerializedObject).DecorateWithExecutionTimeLogger();
             var res = await decoratedFunc(new RequestWithContext<QueryData, Model, Context>(context, this));
             var retVal = res.GetValueThrowExceptionIfExceptionPresent();
             return retVal;
@@ -152,7 +152,7 @@ namespace RequestDecorator.Extension.Test
 
         public async Task<TR> Process(IAPIContext<TC> context)
         {
-            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializationHelper.CustomGetJSONSerializedObject).DecorateWithExecutionTimeLogger();
+            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializeDeserializeHelper.GetJSONSerializedObject).DecorateWithExecutionTimeLogger();
             var res = await decoratedFunc(new RequestWithContext<TI, TR, TC>(context, this));
             var retVal = res.GetValueThrowExceptionIfExceptionPresent();
             return retVal;
@@ -165,7 +165,6 @@ namespace RequestDecorator.Extension.Test
         {
         }
 
-       // [JsonIgnore]
         public override Func<IRequestContext<QueryData, Model, Context>, MayBe<ValidationException>> ValidationFunc =>
             (IRequestContext<QueryData, Model, Context>  req) =>
                 req.RequestInfo.Data.ID.HasValue
@@ -173,7 +172,7 @@ namespace RequestDecorator.Extension.Test
                     :
                     new MayBe<FluentValidation.ValidationException>(new FluentValidation.ValidationException("ID Value is null"));
 
-        //[JsonIgnore]
+        
         public override Func<IRequestContext<QueryData, Model, Context>, Task<Result<Model>>> ProcessRequestFunc
         =>
             (r) =>
@@ -183,16 +182,4 @@ namespace RequestDecorator.Extension.Test
             };
     }
 
-    public static class SerializationHelper
-    {
-        public static string CustomGetJSONSerializedObject(object value)
-        {
-            if (value == null)
-                return string.Empty;
-            var sb = new StringBuilder();
-            var serializer = new JsonSerializer();
-            serializer.Serialize(new StringWriter(sb), value);
-            return sb.ToString();
-        }
-    }
 }
