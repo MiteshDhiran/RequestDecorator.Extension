@@ -187,20 +187,12 @@ namespace RequestDecorator.Extension.Test
     {
         public static string CustomGetJSONSerializedObject(object value)
         {
-            try
-            {
-                if (value == null)
-                    return string.Empty;
-                var sb = new StringBuilder();
-                var serializer = new JsonSerializer();
-                serializer.Serialize(new StringWriter(sb), value);
-                return sb.ToString();
-            }
-            catch(Exception ex)
-            {
-                return $"Could not serialize. Error: {ex.Message}";
-            }
-            return "Could not serialize";
+            if (value == null)
+                return string.Empty;
+            var sb = new StringBuilder();
+            var serializer = new JsonSerializer();
+            serializer.Serialize(new StringWriter(sb), value);
+            return sb.ToString();
         }
     }
 }
