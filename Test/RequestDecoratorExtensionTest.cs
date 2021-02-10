@@ -73,7 +73,6 @@ namespace RequestDecorator.Extension.Test
         }
     }
 
-    [DataContract]
     public class QueryData
     {
         public QueryData(int? id)
@@ -81,11 +80,9 @@ namespace RequestDecorator.Extension.Test
             ID = id;
         }
 
-        [DataMember]
         public int? ID { get;  }
     }
 
-    [DataContract]
     public class Model
     {
         
@@ -102,7 +99,6 @@ namespace RequestDecorator.Extension.Test
         
     }
 
-    [DataContract]
     public class QueryRequest : IRequestWithFluentValidator<QueryData,Model,Context>
     {
         public QueryRequest(QueryData data)
@@ -144,10 +140,8 @@ namespace RequestDecorator.Extension.Test
         {
             Data = data;
         }
-        [JsonIgnore]
         public abstract Func<IRequestContext<TI, TR, TC>, MayBe<ValidationException>> ValidationFunc { get; }
         public TI Data { get; }
-        [JsonIgnore]
         public abstract Func<IRequestContext<TI, TR, TC>, Task<Result<TR>>> ProcessRequestFunc { get; }
 
         public async Task<TR> Process(IAPIContext<TC> context)
