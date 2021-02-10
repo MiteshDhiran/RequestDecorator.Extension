@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDecorator.Extension", "RequestDecorator.Extension.csproj", "{51B8B737-0B7D-41C8-B6BA-4244EAE8397C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDecorator.Extension", "src\RequestDecorator.Extension.csproj", "{51B8B737-0B7D-41C8-B6BA-4244EAE8397C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDecorator.Extension.Test", "Test\RequestDecorator.Extension.Test.csproj", "{A7444F9D-2C83-47A9-8651-B1E5AA262C86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{51B8B737-0B7D-41C8-B6BA-4244EAE8397C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B8B737-0B7D-41C8-B6BA-4244EAE8397C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B8B737-0B7D-41C8-B6BA-4244EAE8397C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7444F9D-2C83-47A9-8651-B1E5AA262C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7444F9D-2C83-47A9-8651-B1E5AA262C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7444F9D-2C83-47A9-8651-B1E5AA262C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7444F9D-2C83-47A9-8651-B1E5AA262C86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
