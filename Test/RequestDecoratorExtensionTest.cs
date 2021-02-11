@@ -1,14 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 using CommandDecoratorExtension;
 using FluentValidation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using RequestDecorator.Functional;
 
 namespace RequestDecorator.Extension.Test
