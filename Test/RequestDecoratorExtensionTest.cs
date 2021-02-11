@@ -120,10 +120,7 @@ namespace RequestDecorator.Extension.Test
             }; 
         public async Task<Model> Process(IAPIContext<Context> context)
         {
-            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializeDeserializeHelper.GetJSONSerializedObject).DecorateWithExecutionTimeLogger();
-            var res = await decoratedFunc(new RequestWithContext<QueryData, Model, Context>(context, this));
-            var retVal = res.GetValueThrowExceptionIfExceptionPresent();
-            return retVal;
+            return await CentralProcessor.Process(this, context);
         }
     }
 
@@ -146,8 +143,16 @@ namespace RequestDecorator.Extension.Test
 
         public async Task<TR> Process(IAPIContext<TC> context)
         {
-            var decoratedFunc = this.ProcessRequestFunc.DecorateRequestWithFluentValidation(this.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializeDeserializeHelper.GetJSONSerializedObject).DecorateWithExecutionTimeLogger();
-            var res = await decoratedFunc(new RequestWithContext<TI, TR, TC>(context, this));
+            return await CentralProcessor.Process(this, context);
+        }
+    }
+
+    public static class CentralProcessor
+    {
+        public static async Task<TR> Process<TI,TR,TC>(this IRequestWithFluentValidator<TI, TR, TC> req, IAPIContext<TC> context)
+        {
+            var decoratedFunc = req.ProcessRequestFunc.DecorateRequestWithFluentValidation(req.ValidationFunc).DecorateRequestWithInputOutputLogging(SerializeDeserializeHelper.GetJSONSerializedObject).DecorateWithExecutionTimeLogger();
+            var res = await decoratedFunc(new RequestWithContext<TI, TR, TC>(context, req));
             var retVal = res.GetValueThrowExceptionIfExceptionPresent();
             return retVal;
         }
